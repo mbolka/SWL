@@ -4,7 +4,7 @@ services:
       build: ./client/.
       container_name: client
       networks:
-        network2:
+        network1:
           aliases:
             - client
 
@@ -16,6 +16,7 @@ services:
         network2:
           aliases:
             - p1
+        network3:
       container_name: p1
 
     p2:
@@ -26,6 +27,7 @@ services:
         network2:
           aliases:
             - p2
+        network3:
       container_name: p2
 
     p3:
@@ -33,6 +35,9 @@ services:
       volumes:
        - ./m3/conf:/etc/squid
       networks:
+        network1:
+          aliases:
+            - p3
         network2:
           aliases:
             - p3
@@ -43,3 +48,6 @@ networks:
     driver: overlay
     internal: true
   network2:
+    driver: overlay
+    internal: true
+  network3:
