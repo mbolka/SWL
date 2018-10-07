@@ -4,7 +4,7 @@ services:
       build: ./client/.
       container_name: client
       networks:
-        network1:
+        client-connection:
           aliases:
             - client
 
@@ -13,10 +13,9 @@ services:
       volumes:
        - ./m1/conf:/etc/squid
       networks:
-        network2:
+        internet-connection:
           aliases:
             - p1
-        network3:
       container_name: p1
 
     p2:
@@ -24,10 +23,12 @@ services:
       volumes:
         - ./m2/conf:/etc/squid
       networks:
-        network2:
+        proxy-network-1:
           aliases:
             - p2
-        network3:
+        internet-connection:
+          aliases:
+            - p2
       container_name: p2
 
     p3:
@@ -35,19 +36,19 @@ services:
       volumes:
        - ./m3/conf:/etc/squid
       networks:
-        network1:
+        client-connection:
           aliases:
             - p3
-        network2:
+        proxy-network-1:
           aliases:
             - p3
       container_name: p3
 
 networks:
-  network1:
+  client-connection:
     driver: overlay
     internal: true
-  network2:
+  proxy-network-1:
     driver: overlay
     internal: true
-  network3:
+  internet-connection:
