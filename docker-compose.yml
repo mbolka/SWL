@@ -1,0 +1,43 @@
+version: '3'
+services:
+    client:
+      build: ./client/.
+      links:
+        - "p2:p2"
+        - "p3:p3"
+      container_name: client
+      networks:
+        - network1
+    p1:
+      build: ./m1/.
+      volumes:
+       - ./m1/conf:/etc/squid
+      networks:
+        - network1
+        - network2
+      container_name: p1
+
+    p2:
+      build: ./m2/.
+      volumes:
+        - ./m2/conf:/etc/squid
+      networks:
+        - network1
+      links:
+        - "p1:p1"
+      container_name: p2
+    p3:
+      build: ./m3/.
+      volumes:
+       - ./m3/conf:/etc/squid
+      networks:
+        - network1
+      links:
+        - "p1:p1"
+      container_name: p3
+
+networks:
+  network1:
+    driver: overlay
+    internal: true
+  network2:
