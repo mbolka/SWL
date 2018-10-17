@@ -4,7 +4,7 @@ services:
       build: ./client/.
       container_name: client
       networks:
-        network2:
+        network1:
           aliases:
             - client
 
@@ -16,6 +16,9 @@ services:
         network2:
           aliases:
             - p1
+        network1:
+          aliases:
+            - p1
       container_name: p1
 
     p2:
@@ -25,6 +28,9 @@ services:
       networks:
         network2:
           aliases:
+            - p2
+        network1:
+           aliases:
             - p2
       container_name: p2
 
